@@ -259,14 +259,17 @@ The engine knows nothing about Telegram, SMTP, or webhooks. It emits **domain ev
 class Envelope:
     event: DomainEvent
     title: str
-    body: str            # rich-text; provider decides how to render/truncate
-    severity: str        # "down" | "recovered" | "info"
+    body: str  # rich-text; provider decides how to render/truncate
+    severity: str  # "down" | "recovered" | "info"
     occurred_at: datetime
-    meta: dict           # extra fields; a provider may use or ignore
+    meta: dict  # extra fields; a provider may use or ignore
+
 
 class ChannelProvider(Protocol):
-    kind: str                                   # "telegram", "smtp_email", ...
+    kind: str  # "telegram", "smtp_email", ...
+
     async def send(self, envelope: Envelope, config: ChannelConfig) -> None: ...
+
 
 def build_envelope(event: DomainEvent, monitor: Monitor) -> Envelope: ...  # single template source
 ```
