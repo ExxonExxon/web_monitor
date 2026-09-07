@@ -478,6 +478,7 @@ Vibe-coded reality: an AI agent does **not** reliably build this in one pass. Ev
 - Models + Pydantic schemas (Monitor, MonitorState, CheckResult, DomainEvent, ChannelConfig), monitor config loader/validator (`wm config-check`), state machine with full unit coverage, single clock source.
 - Gate: state machine suite green; no network or DB in this phase.
 
+> ✅ Done (see `docs/superpowers/plans/2026-09-07-phase-c-probing-scheduler.md`).
 **Phase C — Probing + scheduler**
 - `HTTPCheck` strategy, probe runner, asyncio scheduler with jitter/concurrency/graceful shutdown, isolation on bad monitors, `wm check <id>`.
 - Gate: mocked-network tests; scheduler cadence + isolation tests green.
