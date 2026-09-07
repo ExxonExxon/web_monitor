@@ -474,7 +474,7 @@ Vibe-coded reality: an AI agent does **not** reliably build this in one pass. Ev
 - Lock §13 stack + §15.1 decision. Scaffold: `uv` project, `pyproject.toml`, `app/` layout, pydantic-settings with env, ruff/mypy/pytest config, CI-able `make`/script gates, multi-arch-ready `Dockerfile` + `docker-compose.yml`, empty FastAPI app with `/healthz`.
 - Gate: `uv sync`, ruff/mypy/pytest green, `docker compose up` serves `/healthz`.
 
-**Phase B — Domain core (no I/O)**
+> ✅ Done (see `docs/superpowers/plans/2026-09-07-phase-b-domain-core.md`). **Phase B — Domain core (no I/O)**
 - Models + Pydantic schemas (Monitor, MonitorState, CheckResult, DomainEvent, ChannelConfig), monitor config loader/validator (`wm config-check`), state machine with full unit coverage, single clock source.
 - Gate: state machine suite green; no network or DB in this phase.
 
