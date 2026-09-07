@@ -159,8 +159,7 @@ from app.domain.models import CheckResult, HttpCheckConfig
 class CheckStrategy(Protocol):
     """One strategy knows how to probe one kind of target (PLAN.md §7)."""
 
-    async def run(self, cfg: HttpCheckConfig, timeout_s: float) -> CheckResult:
-        ...
+    async def run(self, cfg: HttpCheckConfig, timeout_s: float) -> CheckResult: ...
 ```
 
 - [ ] **Step 5: Implement `app/probe/http.py`**
@@ -545,17 +544,14 @@ class Scheduler:
         self._jitter = jitter
         self._enabled = [monitor for monitor in monitors if monitor.enabled]
         self._machines = {
-            monitor.id: MonitorStateMachine(monitor, clock=self._clock)
-            for monitor in self._enabled
+            monitor.id: MonitorStateMachine(monitor, clock=self._clock) for monitor in self._enabled
         }
         self._tasks: list[asyncio.Task[None]] = []
 
     async def start(self) -> None:
         if self._tasks:
             raise RuntimeError("scheduler already started")
-        self._tasks = [
-            asyncio.create_task(self._tick_loop(monitor)) for monitor in self._enabled
-        ]
+        self._tasks = [asyncio.create_task(self._tick_loop(monitor)) for monitor in self._enabled]
 
     async def stop(self) -> None:
         tasks = self._tasks
@@ -647,11 +643,7 @@ from app.domain.models import CheckResult
 runner = CliRunner()
 
 VALID_CONFIG = (
-    "monitors:\n"
-    "  - id: blog\n"
-    "    name: Blog\n"
-    "    check_config:\n"
-    "      url: https://example.com\n"
+    "monitors:\n  - id: blog\n    name: Blog\n    check_config:\n      url: https://example.com\n"
 )
 
 
