@@ -469,7 +469,8 @@ Vibe-coded reality: an AI agent does **not** reliably build this in one pass. Ev
 
 > Execution rule for AI passes: one milestone (or one task inside a big one) per pass; never "and also refactor X / add Y" in the same pass. Lock decisions in §15 log before the milestone that depends on them. Run the full gate each time.
 
-**Phase A — Foundations (decision lock + skeleton)**
+> ✅ Done (see `docs/superpowers/plans/2026-09-07-phase-a-foundation.md`). **Phase A — Foundations (decision lock + skeleton)**
+
 - Lock §13 stack + §15.1 decision. Scaffold: `uv` project, `pyproject.toml`, `app/` layout, pydantic-settings with env, ruff/mypy/pytest config, CI-able `make`/script gates, multi-arch-ready `Dockerfile` + `docker-compose.yml`, empty FastAPI app with `/healthz`.
 - Gate: `uv sync`, ruff/mypy/pytest green, `docker compose up` serves `/healthz`.
 
