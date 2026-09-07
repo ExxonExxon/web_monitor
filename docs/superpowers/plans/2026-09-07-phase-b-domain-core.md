@@ -112,9 +112,7 @@ def test_monitor_id_must_be_slug() -> None:
 
 def test_monitor_requires_valid_url() -> None:
     with pytest.raises(ValidationError):
-        Monitor.model_validate(
-            {"id": "blog", "name": "Blog", "check_config": {"url": "not-a-url"}}
-        )
+        Monitor.model_validate({"id": "blog", "name": "Blog", "check_config": {"url": "not-a-url"}})
 
 
 def test_monitor_state_defaults() -> None:
@@ -385,7 +383,9 @@ from app.domain.state import MonitorStateMachine
 
 
 def _ok(clock, *, latency_ms: float | None = None, status_code: int = 200) -> CheckResult:
-    return CheckResult(ok=True, status_code=status_code, latency_ms=latency_ms, checked_at=clock.now())
+    return CheckResult(
+        ok=True, status_code=status_code, latency_ms=latency_ms, checked_at=clock.now()
+    )
 
 
 def _fail(clock, *, error: str = "connect", status_code: int | None = None) -> CheckResult:
@@ -645,7 +645,9 @@ class MonitorStateMachine:
             if duration_down_s is not None:
                 payload["duration_down_s"] = duration_down_s
             payload["resolved_at"] = now.isoformat()
-        return DomainEvent(type=event_type, monitor_id=self.monitor.id, payload=payload, occurred_at=now)
+        return DomainEvent(
+            type=event_type, monitor_id=self.monitor.id, payload=payload, occurred_at=now
+        )
 ```
 
 - [ ] **Step 5: Run the state machine tests**
@@ -925,7 +927,9 @@ def test_config_check_fails_on_invalid_yaml(tmp_path: Path) -> None:
 
 def test_config_check_fails_on_validation_error(tmp_path: Path) -> None:
     path = tmp_path / "monitors.yaml"
-    path.write_text("monitors:\n  - id: one\n    check_config:\n      url: nope\n", encoding="utf-8")
+    path.write_text(
+        "monitors:\n  - id: one\n    check_config:\n      url: nope\n", encoding="utf-8"
+    )
     result = runner.invoke(app, ["config-check", str(path)])
     assert result.exit_code == 1
     assert "invalid config" in result.stderr
