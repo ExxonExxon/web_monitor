@@ -474,7 +474,7 @@ Vibe-coded reality: an AI agent does **not** reliably build this in one pass. Ev
 - Lock §13 stack + §15.1 decision. Scaffold: `uv` project, `pyproject.toml`, `app/` layout, pydantic-settings with env, ruff/mypy/pytest config, CI-able `make`/script gates, multi-arch-ready `Dockerfile` + `docker-compose.yml`, empty FastAPI app with `/healthz`.
 - Gate: `uv sync`, ruff/mypy/pytest green, `docker compose up` serves `/healthz`.
 
-**Phase B — Domain core (no I/O)**
+> ✅ Done (see `docs/superpowers/plans/2026-09-07-phase-b-domain-core.md`). **Phase B — Domain core (no I/O)**
 - Models + Pydantic schemas (Monitor, MonitorState, CheckResult, DomainEvent, ChannelConfig), monitor config loader/validator (`wm config-check`), state machine with full unit coverage, single clock source.
 - Gate: state machine suite green; no network or DB in this phase.
 
@@ -514,6 +514,10 @@ Every open/notable decision the builder hits goes here **before** the code that 
 | 🔒 Locked (Phase A) | **YAML config file** is the monitor source of truth; DB-backed monitors revisited only on a multi-user pivot (AI-editable + reviewable diffs won the comparison) | D2 |
 | 🔒 Locked (Phase A) | **Custom asyncio scheduler** (per-monitor timers, injected clock) — not apscheduler | §13 |
 | 🔒 Locked (Phase A) | Repo workflow: `main` (stable) + `develop` (integration) + `feature/*` branches via PR; merge `develop`→`main` + tag at each green milestone | §15 |
+| 🔒 Locked (Phase B) | Domain core is a **single Pydantic v2 set** — config-boundary validation models ARE the runtime domain objects (no duplicate schema layer) | §5 |
+| 🔒 Locked (Phase B) | Alert semantics: transitions only; after a DOWN alert, re-DOWN alerts suppressed for `cooldown_s` (default 300), RECOVERED always reported immediately | §8, §5 |
+| 🔒 Locked (Phase B) | `wm config-check` CLI ships in Phase B (adds `typer` + `pyyaml` runtime deps) | §9, §11 |
+| 🔒 Locked (Phase B) | Internal timestamps are timezone-aware UTC; `Settings.timezone` is display-only. Single injected clock (`Clock` protocol + `SystemClock`), fake clock in tests | §5 |
 | ❓ Open (Phase H) | Which second channel to build as the swap-proof (email is the named candidate) | §6.5 |
 
 ---

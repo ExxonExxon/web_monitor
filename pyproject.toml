@@ -7,7 +7,12 @@ dependencies = [
   "fastapi>=0.115",
   "uvicorn>=0.32",
   "pydantic-settings>=2.6",
+  "pyyaml>=6.0.2",
+  "typer>=0.12",
 ]
+
+[project.scripts]
+wm = "app.cli:app"
 
 [dependency-groups]
 dev = [
@@ -16,6 +21,7 @@ dev = [
   "pytest>=8.3",
   "pytest-asyncio>=0.24",
   "ruff>=0.8",
+  "types-PyYAML>=6.0",
 ]
 
 [build-system]
