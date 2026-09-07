@@ -518,6 +518,10 @@ Every open/notable decision the builder hits goes here **before** the code that 
 | 🔒 Locked (Phase B) | Alert semantics: transitions only; after a DOWN alert, re-DOWN alerts suppressed for `cooldown_s` (default 300), RECOVERED always reported immediately | §8, §5 |
 | 🔒 Locked (Phase B) | `wm config-check` CLI ships in Phase B (adds `typer` + `pyyaml` runtime deps) | §9, §11 |
 | 🔒 Locked (Phase B) | Internal timestamps are timezone-aware UTC; `Settings.timezone` is display-only. Single injected clock (`Clock` protocol + `SystemClock`), fake clock in tests | §5 |
+| 🔒 Locked (Phase C) | Probe strategies: registry keyed by `CheckType` mapping to a factory `(clock) -> CheckStrategy`; scheduler + service talk only to the registry — adding a check type never edits the scheduler or state machine | §7, D7 |
+| 🔒 Locked (Phase C) | Scheduler: custom asyncio loop, one task per **enabled** monitor, fixed-phase interval computed from the injected clock, optional initial jitter (stagger), global concurrency cap (`max_concurrency`, default 5), per-monitor exception isolation, graceful cancel-and-drain stop | §3.1, §14 |
+| 🔒 Locked (Phase C) | Scheduler cadence/isolation/concurrency are tested with **real asyncio time** + tiny intervals + an injected fake ticker (deterministic loop tests; no manual clock-stepping). `FakeClock` stays for domain/state-machine time semantics | §14-4 |
+| 🔒 Locked (Phase C) | `wm check <id>` and scheduler ticks share one service path — `run_check(monitor, machine)`: registry strategy probe → state machine record → events (D8). `httpx` becomes a runtime dep; `respx` stays dev | §11, D8 |
 | ❓ Open (Phase H) | Which second channel to build as the swap-proof (email is the named candidate) | §6.5 |
 
 ---
