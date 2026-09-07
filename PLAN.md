@@ -514,6 +514,10 @@ Every open/notable decision the builder hits goes here **before** the code that 
 | 🔒 Locked (Phase A) | **YAML config file** is the monitor source of truth; DB-backed monitors revisited only on a multi-user pivot (AI-editable + reviewable diffs won the comparison) | D2 |
 | 🔒 Locked (Phase A) | **Custom asyncio scheduler** (per-monitor timers, injected clock) — not apscheduler | §13 |
 | 🔒 Locked (Phase A) | Repo workflow: `main` (stable) + `develop` (integration) + `feature/*` branches via PR; merge `develop`→`main` + tag at each green milestone | §15 |
+| 🔒 Locked (Phase B) | Domain core is a **single Pydantic v2 set** — config-boundary validation models ARE the runtime domain objects (no duplicate schema layer) | §5 |
+| 🔒 Locked (Phase B) | Alert semantics: transitions only; after a DOWN alert, re-DOWN alerts suppressed for `cooldown_s` (default 300), RECOVERED always reported immediately | §8, §5 |
+| 🔒 Locked (Phase B) | `wm config-check` CLI ships in Phase B (adds `typer` + `pyyaml` runtime deps) | §9, §11 |
+| 🔒 Locked (Phase B) | Internal timestamps are timezone-aware UTC; `Settings.timezone` is display-only. Single injected clock (`Clock` protocol + `SystemClock`), fake clock in tests | §5 |
 | ❓ Open (Phase H) | Which second channel to build as the swap-proof (email is the named candidate) | §6.5 |
 
 ---
