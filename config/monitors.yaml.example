@@ -1,0 +1,20 @@
+# web-monitor configuration example.
+# Copy to config/monitors.yaml (the path `wm config-check` validates by default).
+monitors:
+  - id: my-blog
+    name: My Blog
+    check_type: http
+    check_config:
+      url: https://blog.example.com
+      method: GET
+      expected_status: 200
+      headers: {}
+    interval_s: 60
+    timeout_s: 10
+    retries: 3
+    cooldown_s: 300
+    enabled: true
+channels:
+  - name: telegram-home
+    type: telegram
+    events: [service_down, service_recovered]
