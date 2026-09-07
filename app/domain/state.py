@@ -23,6 +23,11 @@ class MonitorStateMachine:
         self.state = state or MonitorState(monitor_id=monitor.id)
         self._clock = clock or SystemClock()
 
+    @property
+    def clock(self) -> Clock:
+        """The single clock source injected into this state machine."""
+        return self._clock
+
     def record(self, result: CheckResult) -> list[DomainEvent]:
         now = self._clock.now()
         self.state.last_check_at = now
