@@ -507,8 +507,9 @@ Every open/notable decision the builder hits goes here **before** the code that 
 |---|---|---|
 | 🔒 Locked | Single process, outbox notifications, pluggable channel providers, YAML monitor config v1, SQLite WAL, confirm-before-alert thresholds | §4 |
 | 🔒 Locked | Defaults: retries=3, cooldown=300s, retention=30d, interval=60s | sensible single-user defaults, all configurable |
-| ❓ Open (Phase A) | **Config file vs DB-backed monitors** — YAML is default; revisit if "add monitor from dashboard" becomes a real want | D2 |
-| ❓ Open (Phase A) | Custom asyncio scheduler vs apscheduler | §13 |
+| 🔒 Locked (Phase A) | **YAML config file** is the monitor source of truth; DB-backed monitors revisited only on a multi-user pivot (AI-editable + reviewable diffs won the comparison) | D2 |
+| 🔒 Locked (Phase A) | **Custom asyncio scheduler** (per-monitor timers, injected clock) — not apscheduler | §13 |
+| 🔒 Locked (Phase A) | Repo workflow: `main` (stable) + `develop` (integration) + `feature/*` branches via PR; merge `develop`→`main` + tag at each green milestone | §15 |
 | ❓ Open (Phase H) | Which second channel to build as the swap-proof (email is the named candidate) | §6.5 |
 
 ---
