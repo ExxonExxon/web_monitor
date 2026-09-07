@@ -259,14 +259,17 @@ The engine knows nothing about Telegram, SMTP, or webhooks. It emits **domain ev
 class Envelope:
     event: DomainEvent
     title: str
-    body: str            # rich-text; provider decides how to render/truncate
-    severity: str        # "down" | "recovered" | "info"
+    body: str  # rich-text; provider decides how to render/truncate
+    severity: str  # "down" | "recovered" | "info"
     occurred_at: datetime
-    meta: dict           # extra fields; a provider may use or ignore
+    meta: dict  # extra fields; a provider may use or ignore
+
 
 class ChannelProvider(Protocol):
-    kind: str                                   # "telegram", "smtp_email", ...
+    kind: str  # "telegram", "smtp_email", ...
+
     async def send(self, envelope: Envelope, config: ChannelConfig) -> None: ...
+
 
 def build_envelope(event: DomainEvent, monitor: Monitor) -> Envelope: ...  # single template source
 ```
@@ -466,7 +469,8 @@ Vibe-coded reality: an AI agent does **not** reliably build this in one pass. Ev
 
 > Execution rule for AI passes: one milestone (or one task inside a big one) per pass; never "and also refactor X / add Y" in the same pass. Lock decisions in §15 log before the milestone that depends on them. Run the full gate each time.
 
-**Phase A — Foundations (decision lock + skeleton)**
+> ✅ Done (see `docs/superpowers/plans/2026-09-07-phase-a-foundation.md`). **Phase A — Foundations (decision lock + skeleton)**
+
 - Lock §13 stack + §15.1 decision. Scaffold: `uv` project, `pyproject.toml`, `app/` layout, pydantic-settings with env, ruff/mypy/pytest config, CI-able `make`/script gates, multi-arch-ready `Dockerfile` + `docker-compose.yml`, empty FastAPI app with `/healthz`.
 - Gate: `uv sync`, ruff/mypy/pytest green, `docker compose up` serves `/healthz`.
 
